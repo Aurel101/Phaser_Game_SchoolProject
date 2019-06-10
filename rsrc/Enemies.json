@@ -1,0 +1,28 @@
+{
+  "enemy1": {
+    "number": 1,
+    "score": 100,
+    "health": 1,
+    "sprite_config": {
+      "texture": "enemy1"
+    },
+    "bullet_config": {
+      "key": "bullet1",
+      "repeat": 9,
+      "collideWorldBounds": true
+    }
+  },
+  "enemy2": {
+    "number": 2,
+    "score": 500,
+    "health": 3,
+    "sprite_config": {
+      "texture": "enemy2"
+    },
+    "bullet_config": {
+      "key": "bullet2",
+      "repeat": 9,
+      "collideWorldBounds": true
+    }
+  }
+}
