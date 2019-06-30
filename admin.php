@@ -8,19 +8,49 @@ require_once "connection.php";
         Admin
     </title>
     <script src="https://www.jsdelivr.com/package/npm/chart.js?path=dist"></script>
-    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+    <script src="https://cdnjs.com/libraries/Chart.bundle.js"></script>
     <script src="node_modules\chart.js\dist\Chart.bundle.js"></script>
     <style>
+
         table{
             margin: auto;
-            width: 1200px;
-            max-height: 400px;
-            overflow: scroll;
-            border-collapse: collapse;
+            display: block;
+            width: 90%;
+            border: 1px solid #eee;
+            max-height: 620px;
+            overflow: auto;
         }
+        caption{
+            display: block;
+            line-height: 3em;
+            width: 100%;
+            -webkit-align-items: stretch;
+            border: 1px solid #eee
+        }
+        tbody{
+            display: -webkit-flex;
+            height: 400px;
+            overflow: auto;
+            -webkit-flex-flow: row wrap;
+        }
+        tbody tr{
+            display: -webkit-flex;
+            width: 100%;
+        }
+        thead{
+            display: -webkit-flex;
+            -webkit-flex-flow: row;
+        }
+        thead tr{
+            padding-right: 15px;
+            display: -webkit-flex;
+            width: 100%;
+            -webkit-align-items: stretch;
+         }
         td,th{
             text-align: left;
             padding: 8px;
+            width: 15%;
         }
         tr:nth-child(even) {background-color: #f2f2f2;}
         canvas{
@@ -28,18 +58,32 @@ require_once "connection.php";
             height: 600px;
             width: 1200px;
         }
+        button{
+            -webkit-align-items: stretch;
+            line-height: 3em;
+            float: right;
+            width: 200px;
+            height: inherit;
+            background-color:rgb(255, 99, 132);
+            color: whitesmoke;
+            margin: auto;
+        }
     </style>
 </head>
 <body>
 <table id="all">
+    <caption>All time scores
+    <button onclick="getfull()">Get the full table as csv</button></caption>
+    <thead>
     <tr>
-        <caption>All time scores</caption>
         <th>ID</th>
         <th>Username</th>
         <th>Score</th>
         <th>Stage</th>
         <th>Time</th>
     </tr>
+    </thead>
+    <tbody>
 <?php
 $counter=1;
 $score=array();
@@ -55,12 +99,16 @@ while ($row = $results->fetch_assoc())
     echo "<tr>";
     echo "<td>".$counter++."</td><td>".$row['username']."</td><td>".$row['score']."</td><td>".$row['stage']."</td><td>".$row['time']."</td>";
     echo "</tr>";
+
 }
-?>
+
+?></tbody>
 </table>
 <canvas id="allchart"></canvas>
 <table id="thismonth">
-    <caption>This months scores</caption>
+    <caption>This months scores
+    <button onclick="getmonth()">Get this months table as a csv</button></caption>
+<thead>
     <tr>
     <th>ID</th>
     <th>Username</th>
@@ -68,6 +116,8 @@ while ($row = $results->fetch_assoc())
     <th>Stage</th>
     <th>Time</th>
     </tr>
+</thead>
+<tbody>
 <?php
 $counter=1;
 $mscore=array();
@@ -85,6 +135,7 @@ while ($row = $results->fetch_assoc())
     echo "</tr>";
 }
 ?>
+</tbody>
 </table>
 <canvas id="thismonthchart"></canvas>
 <script>
@@ -141,7 +192,16 @@ while ($row = $results->fetch_assoc())
             },
         responsive:false}
     });
+
 </script>
 <br>
+<script>
+    function getfull() {
+        window.location.replace('full_csv.php');
+    }
+    function getmonth() {
+        window.location.replace('month_csv.php');
+    }
+</script>
 </body>
 </html>
